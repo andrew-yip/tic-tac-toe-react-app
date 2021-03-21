@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-// SQUARE CLASS
-
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -11,8 +9,6 @@ function Square(props) {
     </button>
   );
 }
-
-// BOARD CLASS
 
 class Board extends React.Component {
   renderSquare(i) {
@@ -47,8 +43,6 @@ class Board extends React.Component {
   }
 }
 
-// GAME CLASS
-
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -65,7 +59,7 @@ class Game extends React.Component {
 
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
+    const current = history[history.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -91,7 +85,7 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
-    const current = history[history.length - 1];
+    const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
@@ -127,7 +121,10 @@ class Game extends React.Component {
   }
 }
 
-// FUNCTION TO CALCULATE THE WINNER
+// ========================================
+
+ReactDOM.render(<Game />, document.getElementById("root"));
+
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -147,7 +144,3 @@ function calculateWinner(squares) {
   }
   return null;
 }
-
-// ========================================
-
-ReactDOM.render(<Game />, document.getElementById("root"));
